@@ -10,6 +10,10 @@ const styles = {
         alignSelf: 'stretch',
         backgroundColor: '#2a647d0a'
     }),
+    policyIdTextBox:RX.Styles.createTextStyle({
+        borderWidth:1,
+        borderColor: 'rgb(8, 37, 103)',
+     }),
     navcontainer: RX.Styles.createViewStyle({
         justifyContent: 'center',
         alignItems: 'center',
@@ -232,6 +236,11 @@ marginLeft:400
    
 };
 
+    
+ 
+//   alert("Verify otp");
+//     window.location = "otp.html";
+           
 
 export default class RegisterPage extends RX.Component{
     constructor(props) {
@@ -250,16 +259,80 @@ export default class RegisterPage extends RX.Component{
             ]
         });
     }
+    onChangeregister = () => {
+        console.log("arjun")
+        return fetch('http://localhost:8082/registerUser', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
 
-    componentDidMount() {
-        let animation = RX.Animated.timing(this._translationValue, {
-                toValue: 0,
-                easing: RX.Animated.Easing.OutBack(),
-                duration: 500
+            },
+
+            body: JSON.stringify({
+                "companyname": this.state.companyname,
+                "companyid": this.state.companyid,
+                "email": this.state.email,
+                "providername": this.state.providername,
+                "pass": this.state.pass,
+                "repass": this.state.repass,
+                "address": this.state.address,
+                
+                
             }
-        );
+            ),
+        }).then((result) => result.json()).then((result) => {
+            var res = result
+            // var data = responseJson.result.docs[0].Records.submitID
+             console.log("arjun------------>", res);
+            // console.log("logesh------------>", data);
+            // var val = "SubmitId: " + res 
 
-        animation.start();
+
+            swal("Your Submit ID:", res);
+
+            // var resJson1 = JSON.stringify(res)
+            // console.log(resJson1)
+        })
+    }
+    onChangecompanyname = (value) => {
+        this.setState({ companyname: value });
+
+        console.log(this.state.companyname, "companyname");
+    }
+    onChangecompanyid = (value) => {
+        this.setState({ companyid: value });
+
+        console.log(this.state.companyid, "companyid");
+    }
+    onChangeemail = (value) => {
+        this.setState({ email: value });
+
+        console.log(this.state.email, "email");
+    }
+    onChangeprovidername = (value) => {
+        this.setState({ providername: value });
+
+        console.log(this.state.providername, "providername");
+    }
+   
+    onChangepass = (value) => {
+        this.setState({ pass: value });
+
+        console.log(this.state.pass, "pass");
+    }
+    onChangerepass = (value) => {
+        this.setState({ repass: value });
+
+        console.log(this.state.repass, "repass");
+    }
+    onChangeaddress = (value) => {
+        this.setState({ address: value });
+
+        console.log(this.state.address, "address");
+    }
+    componentDidMount() {
+        
     }
     
 
@@ -282,45 +355,53 @@ export default class RegisterPage extends RX.Component{
                 
                 <div class="container">
                 <form>
-                <select class="form-control form-control-lg" id="lgFormGroupInput" style={styles.dropdown}>
+                {/* <select class="form-control form-control-lg" id="lgFormGroupInput" style={styles.dropdown}>
                 <option value="volvo">Relationship Manager</option>
                 <option value="saab">Current provider</option> 
-                </select>
+                </select> */}
                 <div class="form-group row">
                 
-                <label for="lgFormGroupInput" style={styles.sideText}  class="col-sm-2 col-form-label col-form-label-lg">Name</label>
+                <label for="lgFormGroupInput" style={styles.policyId}  class="col-sm-2 col-form-label col-form-label-lg">Company Name</label>
                 
                 <div class="col-sm-10">
-                <input type="email" style={styles.InputSelectorCopy}  id="lgFormGroupInput" placeholder=""/>
+                <RX.TextInput type="email"  style={styles.policyIdTextBox}  value={this.state.companyname} onChangeText={this.onChangecompanyname} id="lgFormGroupInput" placeholder=""/>
       </div>
     </div>
     </form>
     <form>
     <div class="form-group row">
-      <label for="lgFormGroupInput"  style={styles.sideText}  class="col-sm-2 col-form-label col-form-label-lg">Type Id</label>
+      <label for="lgFormGroupInput"  style={styles.sideText}  class="col-sm-2 col-form-label col-form-label-lg">Company Registered Id</label>
       <div class="col-sm-10">
-        <input type="email"  style={styles.InputSelectorCopy}     id="lgFormGroupInput" placeholder=""/>
+      <RX.TextInput type="email"  style={styles.policyIdTextBox}  value={this.state.companyid} onChangeText={this.onChangecompanyid} id="lgFormGroupInput" placeholder=""/>
       </div>
     </div>
     </form>
     <form>
     <div class="form-group row">
-      <label for="lgFormGroupInput"  style={styles.sideText}  class="col-sm-2 col-form-label col-form-label-lg">Enter Unique Identification Number</label>
+      <label for="lgFormGroupInput"  style={styles.sideText}  class="col-sm-2 col-form-label col-form-label-lg">Email Id</label>
+      <div class="col-sm-10">
+      <RX.TextInput type="email"  style={styles.policyIdTextBox}  value={this.state.email} onChangeText={this.onChangeemail} id="lgFormGroupInput" placeholder=""/>
+      </div>
+    </div>
+    </form>
+    {/* <form>
+    <div class="form-group row">
+      <label for="lgFormGroupInput"  style={styles.sideText}  class="col-sm-2 col-form-label col-form-label-lg">Address</label>
       <div class="col-sm-10">
         <input type="email"  style={styles.InputSelectorCopy}  id="lgFormGroupInput" placeholder=""/>
       </div>
     </div>
-    </form>
+    </form> */}
     <form>
     <div class="form-group row">
       <label for="lgFormGroupInput"  style={styles.sideText}  class="col-sm-2 col-form-label col-form-label-lg">Provider Name</label>
       <div class="col-sm-10">
-        <input type="email"  style={styles.InputSelectorCopy}   id="lgFormGroupInput" placeholder=""/>
+      <RX.TextInput type="email"  style={styles.policyIdTextBox}  value={this.state.providername} onChangeText={this.onChangeprovidername} id="lgFormGroupInput" placeholder=""/>
        
       </div>
     </div>
     </form>
-    <form>
+    {/* <form>
     <div class="form-group row">
       <label for="lgFormGroupInput"  style={styles.sideText}  class="col-sm-2 col-form-label col-form-label-lg">Contract Date</label>
       
@@ -332,12 +413,28 @@ export default class RegisterPage extends RX.Component{
                                             
       </div>
     </div>
+    </form> */}
+    <form>
+    <div class="form-group row">
+      <label for="lgFormGroupInput"  style={styles.sideText}  class="col-sm-2 col-form-label col-form-label-lg">Password</label>
+      <div class="col-sm-10">
+      <RX.TextInput type="password"  style={styles.policyIdTextBox}  value={this.state.pass} onChangeText={this.onChangepass} id="lgFormGroupInput" placeholder=""/>
+      </div>
+    </div>
+    </form>
+    <form>
+    <div class="form-group row">
+      <label for="lgFormGroupInput"  style={styles.sideText}  class="col-sm-2 col-form-label col-form-label-lg">Confirm password</label>
+      <div class="col-sm-10">
+      <RX.TextInput type="password"  style={styles.policyIdTextBox}  value={this.state.repass} onChangeText={this.onChangerepass} id="lgFormGroupInput" placeholder=""/>
+      </div>
+    </div>
     </form>
     <form>
     <div class="form-group row">
       <label for="lgFormGroupInput"  style={styles.sideText}  class="col-sm-2 col-form-label col-form-label-lg">Address</label>
       <div class="col-sm-10">
-        <input type="email"  style={styles.AddressSelectorCopy}  id="lgFormGroupInput" placeholder=""/>
+      <RX.TextInput type="email"  style={styles.policyIdTextBox}  value={this.state.address} onChangeText={this.onChangeaddress} id="lgFormGroupInput" placeholder=""/>
         
       </div>
     </div>
@@ -349,7 +446,7 @@ export default class RegisterPage extends RX.Component{
             <RX.Button
                     style={ [styles.button1] }
                    
-                    onPress={this.props.onNavigateFifth }
+                    onPress={() => this.onChangeregister()}
                 >
 
                 
@@ -357,6 +454,9 @@ export default class RegisterPage extends RX.Component{
                         { 'Next' }
                     </RX.Text>
                 </RX.Button>
+                {/* <div class="form-group " style="margin-top:40px">
+                                <button type="button" id="button"  class="btn btn-primary btn-lg btn-block login-button">Submit </button>
+						</div> */}
                
             </RX.ScrollView>  
                 
